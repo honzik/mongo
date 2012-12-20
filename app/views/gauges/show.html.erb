@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @gauge.name %>
+</p>
+
+<p>
+  <b>Vzt:</b>
+  <%= @gauge.vzt %>
+</p>
+
+
+<%= link_to 'Edit', edit_gauge_path(@gauge) %> |
+<%= link_to 'Back', gauges_path %>

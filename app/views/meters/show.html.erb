@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @meter.name %>
+</p>
+
+<p>
+  <b>VZT:</b>
+  <%= @meter.vzt.to_s %>
+</p>
+
+
+<%= link_to 'Edit', edit_meter_path(@meter) %> |
+<%= link_to 'Back', meters_path %>

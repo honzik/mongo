@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Meter:</b>
+  <%= @measure.meter_id %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @measure.state %>
+</p>
+
+<p>
+  <b>When:</b>
+  <%= @measure.when %>
+</p>
+
+<p>
+  <b>Pozn:</b>
+  <%= @measure.pozn %>
+</p>
+
+
+<%= link_to 'Edit', edit_measure_path(@measure) %> |
+<%= link_to 'Back', measures_path %>
