@@ -2,18 +2,22 @@
 #   gem install sqlite3
 #
 #   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
-  timeout: 5000
-
 stage:
   adapter: mysql2
   database: enectiva_testing
   username: enectiva_test
   password: 4Usj92DFw3xA
+  encoding: utf8
+  pool: 5
+  host: localhost
+  reconnect: false
+
+
+development:
+  adapter: mysql2
+  database: mongo_develop
+  username: mongo
+  password: test
   encoding: utf8
   pool: 5
   host: localhost

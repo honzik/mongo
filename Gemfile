@@ -6,6 +6,8 @@ gem "mongoid", "~> 3.0.0"
 gem "bson_ext"
 gem "thin"
 
+gem "activerecord-import", ">= 0.2.0"
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

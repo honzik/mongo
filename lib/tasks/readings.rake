@@ -11,7 +11,7 @@ namespace :readings do
    config = ActiveRecord::Base.configurations[Rails.env]
    ActiveRecord::Base.establish_connection
    case config["adapter"]
-    when "mysql"
+    when "mysql2"
       ActiveRecord::Base.connection.execute("TRUNCATE #{table}")
     when "sqlite", "sqlite3"
       ActiveRecord::Base.connection.execute("DELETE FROM #{table}")
@@ -61,7 +61,7 @@ namespace :readings do
 
   end
 
-  HOWMANY = 200000
+  HOWMANY = 100000
 
   task :try, [:type, :count, :destroy] => :environment  do |t, args|
 
@@ -92,13 +92,24 @@ namespace :readings do
       g = MeterType.new(:name => 'testing gauge #{n}', :vzt => n % 2 == 1 ? true : false)
       g.save
       puts "Creating meter No. #{n}"
-      (1..HOWMANY).each do |o|
-        r = g.send(Readings).build
-        r.assign_attributes(:state => o*2, :when => Time.now - (HOWMANY*2).days + o.days + n.hours, :pozn => 'aaa')
-      end    
-      t = timed_block do
-        g.save!
-      end
+      if MeterType == Meter
+        columns = [:meter_id, :state, :when, :pozn]
+        measures = []
+        (1..HOWMANY).each do |o|
+          measures << [g.id, o*2, Time.now - (HOWMANY*2).days + o.days + n.hours, 'mass']    
+        end
+        t = timed_block do
+          Measure.import columns, measures, :validate => false
+        end
+      else 
+        (1..HOWMANY).each do |o|
+          r = g.send(Readings).build
+          r.assign_attributes(:state => o*2, :when => Time.now - (HOWMANY*2).days + o.days + n.hours, :pozn => 'aaa')
+        end    
+        t = timed_block do
+          g.save!
+        end
+      end        
       puts "final readings count: #{g.send(Readings).count}, time saving=#{t}"
     end if destroy
 
